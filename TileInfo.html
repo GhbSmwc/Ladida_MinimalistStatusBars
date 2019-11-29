@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<style>
+			html {
+			background-color: white;
+			color: black;
+			font-family: sans-serif;
+			}
+			
+			table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+			}
+			
+			span.NoLineBreak {
+				white-space: nowrap;
+			}
+		</style>
+	</head>
+<body>
+This is a cheatsheet when you are designing custom counters (and other HUD element display) using the minimalistic status bar patch.<br><br>
+
+To find out the best way on finding their tiles on-screen is by using <a href="https://github.com/devinacker/bsnes-plus/releases">Bsnes+ debugger</a>, &rightarrow;
+Tools &rightarrow; Debugger &rightarrow; S-PPU &rightarrow; Tilemap Viewer and selecting &ldquo;3&rdquo; to view the layer 3 tilemap:<br>
+<a href="TileInfo_files/L3TileMap.png" target="_blank"><img width="256" src="TileInfo_files/L3TileMap.png"></a><br><br>
+
+However, for <kbd>status_top.asm</kbd> and <kbd>status_double.asm</kbd>, you cannot see top HUD due to the code handles it is based on timing of when
+they write the HUD. Thus, you need to use the &ldquo;Auto Update&rdquo; and set a breakpoint (Debugger window &rightarrow; Tools &rightarrow; Breakpoint Editor, write
+the address you want the execution to pause at, and check the checkbox labled &ldquo;X&rdquo;) mentioned in the Asar console window during patching in order to
+view the top bar:<br>
+<a href="TileInfo_files/L3TileMap_BreakPointed.png" target="_blank"><img width="256" src="TileInfo_files/L3TileMap_BreakPointed.png"></a><br><br>
+
+The debugger does display the tile coordinate on the &ldquo;Tilemap Viewer&rdquo; when selecting a tile. Use that in conjunction of CTRL+F
+to search for the corresponding RAM address below here (note that coordinates here uses leading zeroes to force a 2-digit display):<br>
+<a href="TileInfo_files/Debugger_TilePosDisplay.png" target="_blank"><img width="256" src="TileInfo_files/Debugger_TilePosDisplay.png"></a><br><br>
+
+
+<table>
+<tr><td></td><th>Tile number and position</th><th>Tile number address (TTTTTTTT)</th><th>Tile properties address (YXPCCCTT)</th></tr>
+<tr><th rowspan="33"><kbd>status_double.asm</kbd>'s Top row/<kbd>status_bottom.asm</kbd>/<kbd>status_top.asm</kbd>)</th></tr>
+<tr><td bgcolor="salmon"><kbd>00 ($00) x=00 (x=$00)</kbd></td><td bgcolor="salmon"><kbd>$0B05</kbd></td><td bgcolor="salmon"><kbd>$0B45</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>01 ($01) x=01 (x=$01)</kbd></td><td bgcolor="salmon"><kbd>$0B06</kbd></td><td bgcolor="salmon"><kbd>$0B46</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>02 ($02) x=02 (x=$02)</kbd></td><td bgcolor="salmon"><kbd>$0B07</kbd></td><td bgcolor="salmon"><kbd>$0B47</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>03 ($03) x=03 (x=$03)</kbd></td><td bgcolor="salmon"><kbd>$0B08</kbd></td><td bgcolor="salmon"><kbd>$0B48</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>04 ($04) x=04 (x=$04)</kbd></td><td bgcolor="salmon"><kbd>$0B09</kbd></td><td bgcolor="salmon"><kbd>$0B49</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>05 ($05) x=05 (x=$05)</kbd></td><td bgcolor="salmon"><kbd>$0B0A</kbd></td><td bgcolor="salmon"><kbd>$0B4A</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>06 ($06) x=06 (x=$06)</kbd></td><td bgcolor="salmon"><kbd>$0B0B</kbd></td><td bgcolor="salmon"><kbd>$0B4B</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>07 ($07) x=07 (x=$07)</kbd></td><td bgcolor="salmon"><kbd>$0B0C</kbd></td><td bgcolor="salmon"><kbd>$0B4C</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>08 ($08) x=08 (x=$08)</kbd></td><td bgcolor="salmon"><kbd>$0B0D</kbd></td><td bgcolor="salmon"><kbd>$0B4D</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>09 ($09) x=09 (x=$09)</kbd></td><td bgcolor="salmon"><kbd>$0B0E</kbd></td><td bgcolor="salmon"><kbd>$0B4E</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>10 ($0A) x=10 (x=$0A)</kbd></td><td bgcolor="salmon"><kbd>$0B0F</kbd></td><td bgcolor="salmon"><kbd>$0B4F</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>11 ($0B) x=11 (x=$0B)</kbd></td><td bgcolor="salmon"><kbd>$0B10</kbd></td><td bgcolor="salmon"><kbd>$0B50</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>12 ($0C) x=12 (x=$0C)</kbd></td><td bgcolor="salmon"><kbd>$0B11</kbd></td><td bgcolor="salmon"><kbd>$0B51</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>13 ($0D) x=13 (x=$0D)</kbd></td><td bgcolor="salmon"><kbd>$0B12</kbd></td><td bgcolor="salmon"><kbd>$0B52</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>14 ($0E) x=14 (x=$0E)</kbd></td><td bgcolor="salmon"><kbd>$0B13</kbd></td><td bgcolor="salmon"><kbd>$0B53</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>15 ($0F) x=15 (x=$0F)</kbd></td><td bgcolor="salmon"><kbd>$0B14</kbd></td><td bgcolor="salmon"><kbd>$0B54</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>16 ($10) x=16 (x=$10)</kbd></td><td bgcolor="salmon"><kbd>$0B15</kbd></td><td bgcolor="salmon"><kbd>$0B55</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>17 ($11) x=17 (x=$11)</kbd></td><td bgcolor="salmon"><kbd>$0B16</kbd></td><td bgcolor="salmon"><kbd>$0B56</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>18 ($12) x=18 (x=$12)</kbd></td><td bgcolor="salmon"><kbd>$0B17</kbd></td><td bgcolor="salmon"><kbd>$0B57</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>19 ($13) x=19 (x=$13)</kbd></td><td bgcolor="salmon"><kbd>$0B18</kbd></td><td bgcolor="salmon"><kbd>$0B58</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>20 ($14) x=20 (x=$14)</kbd></td><td bgcolor="salmon"><kbd>$0B19</kbd></td><td bgcolor="salmon"><kbd>$0B59</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>21 ($15) x=21 (x=$15)</kbd></td><td bgcolor="salmon"><kbd>$0B1A</kbd></td><td bgcolor="salmon"><kbd>$0B5A</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>22 ($16) x=22 (x=$16)</kbd></td><td bgcolor="salmon"><kbd>$0B1B</kbd></td><td bgcolor="salmon"><kbd>$0B5B</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>23 ($17) x=23 (x=$17)</kbd></td><td bgcolor="salmon"><kbd>$0B1C</kbd></td><td bgcolor="salmon"><kbd>$0B5C</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>24 ($18) x=24 (x=$18)</kbd></td><td bgcolor="salmon"><kbd>$0B1D</kbd></td><td bgcolor="salmon"><kbd>$0B5D</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>25 ($19) x=25 (x=$19)</kbd></td><td bgcolor="salmon"><kbd>$0B1E</kbd></td><td bgcolor="salmon"><kbd>$0B5E</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>26 ($1A) x=26 (x=$1A)</kbd></td><td bgcolor="salmon"><kbd>$0B1F</kbd></td><td bgcolor="salmon"><kbd>$0B5F</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>27 ($1B) x=27 (x=$1B)</kbd></td><td bgcolor="salmon"><kbd>$0B20</kbd></td><td bgcolor="salmon"><kbd>$0B60</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>28 ($1C) x=28 (x=$1C)</kbd></td><td bgcolor="salmon"><kbd>$0B21</kbd></td><td bgcolor="salmon"><kbd>$0B61</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>29 ($1D) x=29 (x=$1D)</kbd></td><td bgcolor="salmon"><kbd>$0B22</kbd></td><td bgcolor="salmon"><kbd>$0B62</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>30 ($1E) x=30 (x=$1E)</kbd></td><td bgcolor="salmon"><kbd>$0B23</kbd></td><td bgcolor="salmon"><kbd>$0B63</kbd></td></tr>
+<tr><td bgcolor="salmon"><kbd>31 ($1F) x=31 (x=$1F)</kbd></td><td bgcolor="salmon"><kbd>$0B24</kbd></td><td bgcolor="salmon"><kbd>$0B64</kbd></td></tr>
+<tr><th rowspan="33"><kbd>status_double.asm</kbd>'s Bottom row</th></tr>
+<tr><td bgcolor="cyan"><kbd>32 ($20) x=00 (x=$00)</kbd></td><td bgcolor="cyan"><kbd>$0B25</kbd></td><td bgcolor="cyan"><kbd>$0B65</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>33 ($21) x=01 (x=$01)</kbd></td><td bgcolor="cyan"><kbd>$0B26</kbd></td><td bgcolor="cyan"><kbd>$0B66</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>34 ($22) x=02 (x=$02)</kbd></td><td bgcolor="cyan"><kbd>$0B27</kbd></td><td bgcolor="cyan"><kbd>$0B67</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>35 ($23) x=03 (x=$03)</kbd></td><td bgcolor="cyan"><kbd>$0B28</kbd></td><td bgcolor="cyan"><kbd>$0B68</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>36 ($24) x=04 (x=$04)</kbd></td><td bgcolor="cyan"><kbd>$0B29</kbd></td><td bgcolor="cyan"><kbd>$0B69</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>37 ($25) x=05 (x=$05)</kbd></td><td bgcolor="cyan"><kbd>$0B2A</kbd></td><td bgcolor="cyan"><kbd>$0B6A</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>38 ($26) x=06 (x=$06)</kbd></td><td bgcolor="cyan"><kbd>$0B2B</kbd></td><td bgcolor="cyan"><kbd>$0B6B</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>39 ($27) x=07 (x=$07)</kbd></td><td bgcolor="cyan"><kbd>$0B2C</kbd></td><td bgcolor="cyan"><kbd>$0B6C</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>40 ($28) x=08 (x=$08)</kbd></td><td bgcolor="cyan"><kbd>$0B2D</kbd></td><td bgcolor="cyan"><kbd>$0B6D</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>41 ($29) x=09 (x=$09)</kbd></td><td bgcolor="cyan"><kbd>$0B2E</kbd></td><td bgcolor="cyan"><kbd>$0B6E</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>42 ($2A) x=10 (x=$0A)</kbd></td><td bgcolor="cyan"><kbd>$0B2F</kbd></td><td bgcolor="cyan"><kbd>$0B6F</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>43 ($2B) x=11 (x=$0B)</kbd></td><td bgcolor="cyan"><kbd>$0B30</kbd></td><td bgcolor="cyan"><kbd>$0B70</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>44 ($2C) x=12 (x=$0C)</kbd></td><td bgcolor="cyan"><kbd>$0B31</kbd></td><td bgcolor="cyan"><kbd>$0B71</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>45 ($2D) x=13 (x=$0D)</kbd></td><td bgcolor="cyan"><kbd>$0B32</kbd></td><td bgcolor="cyan"><kbd>$0B72</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>46 ($2E) x=14 (x=$0E)</kbd></td><td bgcolor="cyan"><kbd>$0B33</kbd></td><td bgcolor="cyan"><kbd>$0B73</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>47 ($2F) x=15 (x=$0F)</kbd></td><td bgcolor="cyan"><kbd>$0B34</kbd></td><td bgcolor="cyan"><kbd>$0B74</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>48 ($30) x=16 (x=$10)</kbd></td><td bgcolor="cyan"><kbd>$0B35</kbd></td><td bgcolor="cyan"><kbd>$0B75</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>49 ($31) x=17 (x=$11)</kbd></td><td bgcolor="cyan"><kbd>$0B36</kbd></td><td bgcolor="cyan"><kbd>$0B76</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>50 ($32) x=18 (x=$12)</kbd></td><td bgcolor="cyan"><kbd>$0B37</kbd></td><td bgcolor="cyan"><kbd>$0B77</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>51 ($33) x=19 (x=$13)</kbd></td><td bgcolor="cyan"><kbd>$0B38</kbd></td><td bgcolor="cyan"><kbd>$0B78</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>52 ($34) x=20 (x=$14)</kbd></td><td bgcolor="cyan"><kbd>$0B39</kbd></td><td bgcolor="cyan"><kbd>$0B79</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>53 ($35) x=21 (x=$15)</kbd></td><td bgcolor="cyan"><kbd>$0B3A</kbd></td><td bgcolor="cyan"><kbd>$0B7A</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>54 ($36) x=22 (x=$16)</kbd></td><td bgcolor="cyan"><kbd>$0B3B</kbd></td><td bgcolor="cyan"><kbd>$0B7B</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>55 ($37) x=23 (x=$17)</kbd></td><td bgcolor="cyan"><kbd>$0B3C</kbd></td><td bgcolor="cyan"><kbd>$0B7C</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>56 ($38) x=24 (x=$18)</kbd></td><td bgcolor="cyan"><kbd>$0B3D</kbd></td><td bgcolor="cyan"><kbd>$0B7D</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>57 ($39) x=25 (x=$19)</kbd></td><td bgcolor="cyan"><kbd>$0B3E</kbd></td><td bgcolor="cyan"><kbd>$0B7E</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>58 ($3A) x=26 (x=$1A)</kbd></td><td bgcolor="cyan"><kbd>$0B3F</kbd></td><td bgcolor="cyan"><kbd>$0B7F</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>59 ($3B) x=27 (x=$1B)</kbd></td><td bgcolor="cyan"><kbd>$0B40</kbd></td><td bgcolor="cyan"><kbd>$0B80</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>60 ($3C) x=28 (x=$1C)</kbd></td><td bgcolor="cyan"><kbd>$0B41</kbd></td><td bgcolor="cyan"><kbd>$0B81</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>61 ($3D) x=29 (x=$1D)</kbd></td><td bgcolor="cyan"><kbd>$0B42</kbd></td><td bgcolor="cyan"><kbd>$0B82</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>62 ($3E) x=30 (x=$1E)</kbd></td><td bgcolor="cyan"><kbd>$0B43</kbd></td><td bgcolor="cyan"><kbd>$0B83</kbd></td></tr>
+<tr><td bgcolor="cyan"><kbd>63 ($3F) x=31 (x=$1F)</kbd></td><td bgcolor="cyan"><kbd>$0B44</kbd></td><td bgcolor="cyan"><kbd>$0B84</kbd></td></tr>
+</table>
