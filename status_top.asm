@@ -373,7 +373,7 @@ LDA.w #!status_palette : STA $4312
 LDA #$0020 : STA $4315
 STX $420B
 SEP #$20
-print "To view the top status bar on BSNES+ debugger, breakpoint at $",pc
+print "To view the status bar on BSNES+ debugger, breakpoint at $",pc
 LDA #$09 : STA $2105	;gfx mode 1 + layer 3 priority
 
 if !sa1
