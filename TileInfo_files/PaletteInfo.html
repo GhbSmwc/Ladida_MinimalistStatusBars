@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<style>
+			html {
+			background-color: white;
+			color: black;
+			font-family: sans-serif;
+			}
+			
+			table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+			}
+			
+			span.NoLineBreak {
+				white-space: nowrap;
+			}
+		</style>
+	</head>
+<body>
+<a href="../GHB_Readme.html#PaletteInfo">Back</a>
+<h1>Palette data format</h1>
+What color group does the 8x8 tiles uses is based on the <kbd>CCC</kbd> bits in <kbd>YXPCCCTT</kbd>:
+<ul>
+<li><kbd>CCC = 000</kbd>: Palette 0</li>
+<li><kbd>CCC = 001</kbd>: Palette 1</li>
+<li><kbd>CCC = 010</kbd>: Palette 2</li>
+<li><kbd>CCC = 011</kbd>: Palette 3</li>
+<li><kbd>CCC = 100</kbd>: Palette 4</li>
+<li><kbd>CCC = 101</kbd>: Palette 5</li>
+<li><kbd>CCC = 110</kbd>: Palette 6</li>
+<li><kbd>CCC = 111</kbd>: Palette 7</li>
+</ul><br>
+
+Each palette number refers to what groups of 4 colors (first one of the 4 being transparent) to use:<br>
+<a href="PaletteGroupNumber.png" target="_blank"><img width="255" src="PaletteGroupNumber.png"></a>

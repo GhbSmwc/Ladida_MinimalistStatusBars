@@ -33,6 +33,13 @@ endif
 !status_palette = $0B85|!base    ;status bar palette is here (64 bytes max)
 !l1y_mirror = $0BC5|!base
 
+;Display on Asar console window of the RAM address range (in case if you DO edit
+;the RAM address above).
+
+print "status_tile:             $", hex(!status_tile), " to $", hex(!status_tile+31)   
+print "status_prop:             $", hex(!status_prop), " to $", hex(!status_prop+31)   
+print "status_palette:          $", hex(!status_palette), " to $", hex(!status_palette+63)
+print "l1y_mirror:              $", hex(!l1y_mirror), " to $", hex(!l1y_mirror+5)    
 
 ;below = location of counters in status bar. only change the added value
 ;the bottom bar is +$20
