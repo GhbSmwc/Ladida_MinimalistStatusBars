@@ -36,8 +36,8 @@ endif
 ;Display on Asar console window of the RAM address range (in case if you DO edit
 ;the RAM address above).
 
-print "status_tile:             $", hex(!status_tile), " to $", hex(!status_tile+31)   
-print "status_prop:             $", hex(!status_prop), " to $", hex(!status_prop+31)   
+print "status_tile:             $", hex(!status_tile), " to $", hex(!status_tile+63)   
+print "status_prop:             $", hex(!status_prop), " to $", hex(!status_prop+63)   
 print "status_palette:          $", hex(!status_palette), " to $", hex(!status_palette+$1F)
 print "-Palette 0: $", hex(!status_palette+$00), " to $", hex(!status_palette+$07)
 print "-Palette 1: $", hex(!status_palette+$08), " to $", hex(!status_palette+$0F)
