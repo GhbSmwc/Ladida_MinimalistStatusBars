@@ -30,7 +30,7 @@ endif
 ;dont edit
 !status_tile = $0B05|!base
 !status_prop = $0B45|!base
-!status_palette = $0B85|!base    ;status bar palette is here (64 bytes max)
+!status_palette = $0B85|!base    ;status bar palette is here (64 bytes max) GHB's EDIT: 32 bytes actually, Palette numbers 0-3 are dynamically uploaded.
 !l1y_mirror = $0BC5|!base
 
 ;Display on Asar console window of the RAM address range (in case if you DO edit
@@ -38,8 +38,16 @@ endif
 
 print "status_tile:             $", hex(!status_tile), " to $", hex(!status_tile+31)   
 print "status_prop:             $", hex(!status_prop), " to $", hex(!status_prop+31)   
-print "status_palette:          $", hex(!status_palette), " to $", hex(!status_palette+63)
-print "l1y_mirror:              $", hex(!l1y_mirror), " to $", hex(!l1y_mirror+2)    
+print "status_palette:          $", hex(!status_palette), " to $", hex(!status_palette+$1F)
+print "-Palette 0: $", hex(!status_palette+$00), " to $", hex(!status_palette+$07)
+print "-Palette 1: $", hex(!status_palette+$08), " to $", hex(!status_palette+$0F)
+print "-Palette 2: $", hex(!status_palette+$10), " to $", hex(!status_palette+$17)
+print "-Palette 3: $", hex(!status_palette+$18), " to $", hex(!status_palette+$1F)
+print "-Palette 4: Not stored in RAM; uses same palette as level."
+print "-Palette 5: Not stored in RAM; uses same palette as level."
+print "-Palette 6: Not stored in RAM; uses same palette as level."
+print "-Palette 7: Not stored in RAM; uses same palette as level."
+print "l1y_mirror:              $", hex(!l1y_mirror), " to $", hex(!l1y_mirror+5)    
 
 
 ;below = location of counters in status bar. only change the added value
@@ -83,7 +91,8 @@ DEX : BPL -
 LDA #$28
 STA $0F30|!base
 RTS
-
+;;These are default tiles numbers, properties, and palette.
+;;Ordered the same way as the tiles are laied out in-game.
 .StatusTiles
 db $FC
 db $7C,$26,$27,$27		;lives
@@ -115,10 +124,10 @@ db $24,$20,$20,$20		;coins
 db $20
 
 .StatusPal
-dw !bgcolor,$0000,$7AAB,$7FFF
-dw $7393,$0000,$1E9B,$3B7F
-dw $7393,$0000,$0CFB,$2FEB
-dw $7393,$0000,$7FDD,$2D7F
+dw !bgcolor,$0000,$7AAB,$7FFF ;Palette 0-3, Palette group 0
+dw $7393,$0000,$1E9B,$3B7F ;Palette 4-7, Palette group 1
+dw $7393,$0000,$0CFB,$2FEB ;Palette 8-11 ($08-$0B), Palette group 2
+dw $7393,$0000,$7FDD,$2D7F ;Palette 12-15 ($0C-$0F), Palette group 3
 warnpc $008DF5
 
 

@@ -30,7 +30,7 @@ endif
 ;dont edit
 !status_tile = $0B05|!base
 !status_prop = $0B45|!base
-!status_palette = $0B85|!base    ;status bar palette is here (64 bytes max) GHB's EDIT: 32 bytes actually.
+!status_palette = $0B85|!base    ;status bar palette is here (64 bytes max) GHB's EDIT: 32 bytes actually, Palette numbers 0-3 are dynamically uploaded.
 !l1y_mirror = $0BC5|!base
 
 ;Display on Asar console window of the RAM address range (in case if you DO edit
@@ -99,39 +99,45 @@ RTS
 
 ;_@x--````_______________SSSSSSS_	<-- BOTTOM VISUAL. _ is $FC
 
+;;These are default tiles numbers, properties, and palette.
+;;Ordered the same way as the tiles are laied out in-game.
 .StatusTiles
 
 ;top row
-db $FC,$30,$31,$32,$33,$34,$26,$27
-db $27,$FC,$64,$26,$27,$27,$FC,$5B
-db $FC,$5C,$FC,$FC,$FC,$FC,$FC,$FC
-db $FC,$FC,$76,$77,$27,$27,$27,$FC
+;    0   1   2   3   4   5   6   7
+db $FC,$30,$31,$32,$33,$34,$26,$27 ;>$00-$07
+db $27,$FC,$64,$26,$27,$27,$FC,$5B ;>$08-$0F
+db $FC,$5C,$FC,$FC,$FC,$FC,$FC,$FC ;>$10-$17
+db $FC,$FC,$76,$77,$27,$27,$27,$FC ;>$18-$1F
 
 ;bottom row
-db $FC,$2E,$26,$27,$27,$FC,$FC,$FC
-db $FC,$FC,$FC,$FC,$FC,$FC,$FC,$FC
-db $FC,$FC,$FC,$FC,$FC,$FC,$FC,$FC
-db $00,$00,$00,$00,$00,$00,$00,$FC
+;    0   1   2   3   4   5   6   7
+db $FC,$2E,$26,$27,$27,$FC,$FC,$FC ;>$00-$07 (Continued from above: $20-$27)
+db $FC,$FC,$FC,$FC,$FC,$FC,$FC,$FC ;>$08-$0F (Continued from above: $28-$2F)
+db $FC,$FC,$FC,$FC,$FC,$FC,$FC,$FC ;>$10-$17 (Continued from above: $30-$37)
+db $00,$00,$00,$00,$00,$00,$00,$FC ;>$18-$1F (Continued from above: $38-$3F)
 
 .StatusProps
 
 ;top row
-db $20,$28,$28,$28,$28,$28,$20,$20
-db $20,$20,$28,$20,$20,$20,$20,$21
-db $28,$21,$20,$20,$24,$24,$24,$24
-db $24,$20,$20,$20,$24,$24,$24,$20
+;    0   1   2   3   4   5   6   7
+db $20,$28,$28,$28,$28,$28,$20,$20 ;>$00-$07
+db $20,$20,$28,$20,$20,$20,$20,$21 ;>$08-$0F
+db $28,$21,$20,$20,$24,$24,$24,$24 ;>$10-$17
+db $24,$20,$20,$20,$24,$24,$24,$20 ;>$18-$1F
 
 ;bottom row
-db $20,$24,$20,$20,$20,$20,$20,$20
-db $20,$20,$20,$20,$20,$20,$20,$20
-db $20,$20,$20,$20,$20,$20,$20,$20
-db $20,$20,$20,$20,$20,$20,$20,$20
+;    0   1   2   3   4   5   6   7
+db $20,$24,$20,$20,$20,$20,$20,$20 ;>$00-$07 (Continued from above: $20-$27)
+db $20,$20,$20,$20,$20,$20,$20,$20 ;>$08-$0F (Continued from above: $28-$2F)
+db $20,$20,$20,$20,$20,$20,$20,$20 ;>$10-$17 (Continued from above: $30-$37)
+db $20,$20,$20,$20,$20,$20,$20,$20 ;>$18-$1F (Continued from above: $38-$3F)
 
 .StatusPal
-dw !bgcolor,$0000,$7AAB,$7FFF
-dw $7393,$0000,$1E9B,$3B7F
-dw $7393,$0000,$0CFB,$2FEB
-dw $7393,$0000,$7FDD,$2D7F
+dw !bgcolor,$0000,$7AAB,$7FFF ;Palette 0-3, Palette group 0
+dw $7393,$0000,$1E9B,$3B7F ;Palette 4-7, Palette group 1
+dw $7393,$0000,$0CFB,$2FEB ;Palette 8-11 ($08-$0B), Palette group 2
+dw $7393,$0000,$7FDD,$2D7F ;Palette 12-15 ($0C-$0F), Palette group 3
 warnpc $008DF5
 
 
